@@ -1,0 +1,112 @@
+local plr = game:GetService("Players")
+local lplr = game:GetService("Players").LocalPlayer
+
+prefix = ","
+
+local Settings = {
+    
+    CashDrop = false,
+    CashDropAmount = 100
+    
+}
+
+local Whitelist = {
+    ["VixTheDev"] = true, 
+    ["D43WB"] = true, 
+    ["N0VEMN"] = true, 
+    ["ck_ismydad"] = true
+}
+
+function checkplr(plr)
+    if Whitelist[plr.Name] then
+        return true
+        else
+            return false
+    end
+end
+
+for i,v in pairs(plr:GetChildren()) do
+    
+    v.Chatted:Connect(function(msg)
+    
+    if checkplr then
+    
+        if string.sub(msg, 1, 6) == (prefix.."bring") then
+            
+            wait(.1)
+            targ = v.Character:WaitForChild("HumanoidRootPart")
+            lplr.Character.HumanoidRootPart.CFrame = targ.CFrame * CFrame.new(0, 0, -4)
+
+        end
+        
+        if string.sub(msg, 1, 10) == (prefix.."banksetup") and Settings.CashDrop == false then
+        
+            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-372.281311, 21.2499924, -359.874084)
+            wait(.3)
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Setting Up Droppers..", "All")
+            wait(1)
+            lplr.Character.Humanoid.HipHeight = 20
+            wait(1)
+            lplr.Character.HumanoidRootPart.Anchored = true
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Droppers Have Been Set Up!", "All")
+            Settings.CashDrop = true
+            
+        end
+        
+        if string.sub(msg, 1, 8) == (prefix.."stopset") and Settings.CashDrop == true then
+
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Stopping Setup", "All")
+            wait(.4)
+            lplr.Character.Humanoid.HipHeight = 2
+            lplr.Character.HumanoidRootPart.Anchored = false
+            Settings.CashDrop = false
+            
+        end
+
+        if string.sub(msg, 1, 7) == (prefix.."dropc ") then
+            game:GetService("ReplicatedStorage").MainEvent:FireServer("DropMoney", (string.sub(msg,8)))
+        end
+
+        getgenv().autodrop = false
+
+        if string.sub(msg, 1, 11) == (prefix.."autodropc ") and autodrop == false then
+
+            autodrop = true
+
+            while wait(1) and autodrop == true do
+
+                game:GetService("ReplicatedStorage").MainEvent:FireServer("DropMoney", (string.sub(msg,12)))
+
+            end
+
+        end
+
+        if string.sub(msg, 1, 10) == (prefix.."autodrops") and autodrop == true then
+
+            autodrop = false
+
+        end
+
+        if string.sub(msg, 1, 6) == (prefix.."chat ") then
+            wait(.1)
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer((string.sub(msg,7)), "All")
+        end
+        
+        getgenv().spamc = false
+
+        if string.sub(msg, 1, 5) == (prefix.."adv ") and spamc == false then
+        
+            spamc = true
+
+            while wait(1.5) and spamc == true do
+                game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer((string.sub(msg,6)), "All")
+            end
+            
+        end
+        
+        if string.sub(msg, 1, 5) == (prefix.."sadv") and spamc == true then
+            spamc = false
+        end
+    end
+end)
+end
