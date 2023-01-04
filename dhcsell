@@ -45,21 +45,21 @@ for i,v in pairs(plr:GetChildren()) do
             lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-372.281311, 21.2499924, -359.874084)
         
         elseif lplr.Name == "MiddleManOnTOP" then
-            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-370.281311, 21.2499924, -359.874084)
+            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-368.281311, 21.2499924, -355.874084)
         elseif lplr.Name == "VixWontLoose" then
-            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-368.281311, 21.2499924, -359.874084)
+            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-364.281311, 21.2499924, -351.874084)
         elseif lplr.Name == "AllTimeGroupHolder" then
-            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-366.281311, 21.2499924, -359.874084)
+            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-360.281311, 21.2499924, -359.874084)
         elseif lplr.Name == "TTStorageForTix" then
-            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-372.281311, 21.2499924, -357.874084)
-        elseif lplr.Name == "ck_ismydad" then
-            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-370.281311, 21.2499924, -355.874084)
-        elseif lplr.Name == "imgodatcw" then
-            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-368.281311, 21.2499924, -353.874084)
-        elseif lplr.Name == "JackpotCleanse" then
-            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-366.281311, 21.2499924, -351.874084)
-        elseif lplr.Name == "C9AMES" then
             lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-372.281311, 21.2499924, -355.874084)
+        elseif lplr.Name == "ck_ismydad" then
+            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-368.281311, 21.2499924, -351.874084)
+        elseif lplr.Name == "imgodatcw" then
+            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-364.281311, 21.2499924, -359.874084)
+        elseif lplr.Name == "JackpotCleanse" then
+            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-360.281311, 21.2499924, -355.874084)
+        elseif lplr.Name == "C9AMES" then
+            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-372.281311, 21.2499924, -351.874084)
         end
 
             wait(.3)
@@ -113,6 +113,10 @@ for i,v in pairs(plr:GetChildren()) do
         end
         
         getgenv().spamc = false
+        
+        if string.sub(msg, 1, 6) == (prefix.."owner") then
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Scripted By illusiives!", "All")
+        end
 
         if string.sub(msg, 1, 5) == (prefix.."adv ") and spamc == false then
         
@@ -127,6 +131,45 @@ for i,v in pairs(plr:GetChildren()) do
         if string.sub(msg, 1, 5) == (prefix.."sadv") and spamc == true then
             spamc = false
         end
+
+        if string.sub(msg, 1, 7) == (prefix.."rejoin") and checkplr then
+            game:GetService("TeleportService"):Teleport(game.PlaceId, lplr)
+        end
+
+        getgenv().rply = false
+		
+		if string.sub(msg, 1, 9) == (prefix.."shutdown") and rply == false and checkplr then
+		    game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Are You Sure You Want To Shutdown?", "All")
+		    rply = true
+		    wait(5)
+		    rply = false
+        end
+
+        if rply == true and string.sub(msg, 1, 4) == (prefix.."yes") and checkplr then
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Shutting down in 3 seconds", "All")
+            wait(3)
+            game:shutdown()
+            elseif rply == true and string.sub(msg, 1, 3) == (prefix.."no") and checkplr then
+                  game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Shutdown aborted", "All")
+                  rply = false
+          end
+
+          if string.sub(msg, 1, 4) == (prefix.."to ") then
+            lplr.Character.HumanoidRootPart.CFrame = game:GetService("Players")[(string.sub(msg, 5))].Character.HumanoidRootPart.CFrame
+            print(string.sub(msg, 5))
+          end
+
+          if string.sub(msg, 1, 8) == (prefix.."lfollow") then
+			task = game:GetService("RunService").Heartbeat:Connect(function()
+				lplr.Character.Humanoid:MoveTo(v.Character.Head.Position)
+			end)
+		end
+
+        if string.sub(msg, 1, 5) == (prefix.."stop") then
+			task:Disconnect()
+			lplr.Character.HumanoidRootPart.Anchored = false
+		end
+
     end
 end)
 end
