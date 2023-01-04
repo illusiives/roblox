@@ -41,7 +41,27 @@ for i,v in pairs(plr:GetChildren()) do
         
         if string.sub(msg, 1, 10) == (prefix.."banksetup") and Settings.CashDrop == false then
         
+        if lplr.Name == "MeForTheDub" then
             lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-372.281311, 21.2499924, -359.874084)
+        
+        elseif lplr.Name == "MiddleManOnTOP" then
+            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-370.281311, 21.2499924, -359.874084)
+        elseif lplr.Name == "VixWontLoose" then
+            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-368.281311, 21.2499924, -359.874084)
+        elseif lplr.Name == "AllTimeGroupHolder" then
+            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-366.281311, 21.2499924, -359.874084)
+        elseif lplr.Name == "TTStorageForTix" then
+            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-372.281311, 21.2499924, -357.874084)
+        elseif lplr.Name == "ck_ismydad" then
+            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-370.281311, 21.2499924, -355.874084)
+        elseif lplr.Name == "imgodatcw" then
+            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-368.281311, 21.2499924, -353.874084)
+        elseif lplr.Name == "JackpotCleanse" then
+            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-366.281311, 21.2499924, -351.874084)
+        elseif lplr.Name == "C9AMES" then
+            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-372.281311, 21.2499924, -355.874084)
+        end
+
             wait(.3)
             game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Setting Up Droppers..", "All")
             wait(1)
