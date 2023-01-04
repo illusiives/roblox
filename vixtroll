@@ -1,0 +1,156 @@
+local plr = game:GetService("Players")
+local lplr = game:GetService("Players").LocalPlayer
+
+prefix = "!"
+
+local Events = {}
+
+local Settings = {
+    Loaded = false,
+    Unloaded = true
+}
+
+local whitelist = {
+    3350083739, -- QQCSO
+    3350088827, -- D4W3B
+    3121525099 -- D3LINED
+}
+
+local wh = {"VixTheDev"}
+
+-- function handleCommands(v)
+    
+for i,v in pairs(plr:GetChildren()) do
+    
+     v.Chatted:Connect(function(msg)
+         
+         -- LOAD
+         
+         if string.sub(msg, 1, 5) == (prefix.."load") and v.Name == wh and Settings.Unloaded == true then
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Loading Commands", "All")
+            wait(1)
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Commands Have Been Loaded!", "All")
+            Settings.Unloaded = false
+            Settings.Loaded = true
+         end
+         
+        if string.sub(msg, 1, 9) == (prefix.."lockdown") and v.Name == wh and Settings.Unloaded == false then
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Locking Commands", "All")
+            wait(1)
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Commands Have Been Locked!", "All")
+            Settings.Unloaded = true
+            Settings.Loaded = false
+         end
+         
+		-- Commands
+	if Settings.Unloaded == false and Settings.Loaded == true then
+        if string.sub(msg, 1, 4) == (prefix.."ws ") then
+            lplr.Character.Humanoid.WalkSpeed = (string.sub(msg, 5))
+        end
+        if string.sub(msg, 1, 6) == (prefix.."chat ") then
+            wait(.1)
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer((string.sub(msg,7)), "All")
+        end
+        if string.sub(msg, 1, 6) == (prefix.."bring") then
+            wait(.1)
+            targ = v.Character:WaitForChild("HumanoidRootPart")
+            lplr.Character.HumanoidRootPart.CFrame = targ.CFrame * CFrame.new(0, 0, -4)
+        end
+        if string.sub(msg, 1, 6) == (prefix.."owner") then
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Owner: D3LINED", "All")
+        end
+        if string.sub(msg, 1, 7) == (prefix.."follow") then
+            lplr.Character.Humanoid:MoveTo(v.Character.Head.Position)
+        end
+		if string.sub(msg, 1, 8) == (prefix.."lfollow") then
+			task = game:GetService("RunService").Heartbeat:Connect(function()
+				lplr.Character.Humanoid:MoveTo(v.Character.Head.Position)
+			end)
+		end
+
+		if string.sub(msg, 1, 5) == (prefix.."jump") then
+			lplr.Character.Humanoid.Jump = true
+		end
+
+-- 		if string.sub(msg, 1, 6) == (prefix.."orbit") then
+
+-- 			local OrbitDur = 3
+-- 			local Dist = 10
+
+-- 			local f = 0
+-- 			task = game:GetService("RunService").RenderStepped:Connect(function(dt)
+-- 				f = (f + dt/OrbitDur) % 1
+-- 				local alph = 2 * math.pi * f
+                
+-- 				lplr.Character.HumanoidRootPart.CFrame = CFrame.Angles(0, alph, 0)
+-- 					* CFrame.new(0, 0, Dist)
+-- 					+ v.Character.HumanoidRootPart.Position
+-- 			end)
+
+-- 		end
+
+		if string.sub(msg, 1, 4) == (prefix.."to ") then
+				lplr.Character.HumanoidRootPart.CFrame = game:GetService("Players")[(string.sub(msg, 5))].Character.HumanoidRootPart.CFrame
+				print(string.sub(msg, 5))
+		end
+
+		if string.sub(msg, 1, 7) == (prefix.."orbit ") then
+
+			local OrbitDur = 3
+			local Dist = 10
+
+			local f = 0
+			task = game:GetService("RunService").RenderStepped:Connect(function(dt)
+				f = (f + dt/OrbitDur) % 1
+				local alph = 2 * math.pi * f
+
+				lplr.Character.HumanoidRootPart.CFrame = CFrame.Angles(0, alph, 0)
+					* CFrame.new(0, 0, Dist)
+					+ game:GetService("Players")[(string.sub(msg, 8))].Character.HumanoidRootPart.Position
+			end)
+
+		end
+        if string.sub(msg, 1, 5) == (prefix.."line") then
+            lplr.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame * CFrame.new(5,0,0) 
+        end
+		
+		if string.sub(msg, 1, 6) == (prefix.."line2") then
+            lplr.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,4) 
+        end
+		
+		getgenv().rply = false
+		
+		if string.sub(msg, 1, 9) == (prefix.."shutdown") and rply == false and v.Name == wh then
+		    game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Are You Sure You Want To Shutdown?", "All")
+		    rply = true
+		    wait(5)
+		    rply = false
+        end
+		
+		if rply == true and string.sub(msg, 1, 4) == (prefix.."yes") and v.Name == wh then
+		  game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Shutting down in 3 seconds", "All")
+		  wait(3)
+          game:shutdown()
+		  elseif rply == true and string.sub(msg, 1, 3) == (prefix.."no") and v.Name == wh then
+                game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Shutdown aborted", "All")
+                rply = false
+        end
+		
+		if string.sub(msg, 1, 7) == (prefix.."rejoin") and v.Name == wh then
+            game:GetService("TeleportService"):Teleport(game.PlaceId, lplr)
+        end
+		
+		if string.sub(msg, 1, 5) == (prefix.."stop") then
+			task:Disconnect()
+			lplr.Character.HumanoidRootPart.Anchored = false
+		end
+        end
+    end)
+end
+-- end
+
+-- handleCommands()
+
+-- plr.PlayerAdded:Connect(function(player)
+--     handleCommands(player)
+-- end)
